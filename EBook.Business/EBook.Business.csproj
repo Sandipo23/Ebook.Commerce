@@ -19,4 +19,8 @@
 	<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ebook.Common\Ebook.Common.csproj" />
+  </ItemGroup>
+
 </Project>

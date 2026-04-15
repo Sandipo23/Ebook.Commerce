@@ -1,4 +1,5 @@
-using Ebook.Web.Data;
+
+using Ebook.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

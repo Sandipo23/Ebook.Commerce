@@ -1,4 +1,4 @@
-namespace Ebook.Web.Models
+namespace Ebook.Business.ViewModel
 {
     public class ErrorViewModel
     {
