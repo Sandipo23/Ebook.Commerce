@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="EBook.Application/EBook.Business.csproj" />
+  <Project Path="EBook.Business/EBook.Business.csproj" />
+  <Project Path="Ebook.Common/Ebook.Common.csproj" />
   <Project Path="EBook.Data/EBook.Data.csproj" />
-  <Project Path="Ebook.Domain/EBook.Common.csproj" />
   <Project Path="Ebook.Web/Ebook.Web.csproj" />
 </Solution>
