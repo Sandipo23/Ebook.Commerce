@@ -17,6 +17,12 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="10.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <PackageReference Include="NuGet.Packaging" Version="7.3.1" />
+    <PackageReference Include="NuGet.Protocol" Version="7.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ebook.Common\Ebook.Common.csproj" />
   </ItemGroup>
 
 </Project>

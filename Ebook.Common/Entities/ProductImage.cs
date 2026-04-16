@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ecommerce.Domain.Entities
+namespace EBook.Common.Entities
 {
     public class ProductImage
     {
@@ -9,7 +9,9 @@ namespace Ecommerce.Domain.Entities
         public string ImageURL { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        [ValidateNever]
-        public Product Product { get; set; }
+        [ValidateNever] // This attribute is used to prevent validation of the Product property when validating the ProductImage model.
+                        // This is useful in scenarios where you want to avoid circular references or when the Product property is not required for certain operations.
+        public Product Product { get; set; } // This property represents the navigation property to the Product entity.
+                                             // It allows you to access the related Product information when working with a ProductImage instance.
     }
 }
