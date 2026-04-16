@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace EBook.Business.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class // T represents any class, it is a generic type parameter,
+                                                    // we can use it to create a repository for any type of entity,
+                                                    // such as Product, Category, Order, etc.
     {
         void Add(T entity);
         T GetFirstOrDefault(Expression<Func<T, bool>> predicate, string? includeProperties = null);

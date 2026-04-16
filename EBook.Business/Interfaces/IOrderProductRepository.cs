@@ -9,6 +9,9 @@ namespace EBook.Business.Interfaces
 {
     public interface IOrderProductRepository: IRepository<OrderProduct>
     {
-        void UodateStatus(int id, string orderStatus, string? paymentStatus = null);
+        void UpdateStatus(int id, string orderStatus, string? paymentStatus = null); // This method allows updating the order status and optionally the payment status
+                                                                                     // for a specific order product. The 'id' parameter identifies the order product to be updated,
+                                                                                     // 'orderStatus' specifies the new status of the order, and 'paymentStatus' can be used to update
+                                                                                     // the payment status if provided.
     }
 }
