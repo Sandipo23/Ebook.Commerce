@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EBook.Business\EBook.Business.csproj" />
-    <ProjectReference Include="..\EBook.Data\EBook.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
