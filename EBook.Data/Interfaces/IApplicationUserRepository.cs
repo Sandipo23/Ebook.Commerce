@@ -1,13 +1,14 @@
 ﻿using EBook.Common.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Business.Interfaces
+namespace EBook.Data.Interfaces
 {
-    public interface ICategoryRepository:  IRepository<Category>
+    public interface IApplicationUserRepository: IRepository<ApplicationUser>
     {
     }
 }

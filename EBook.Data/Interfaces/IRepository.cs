@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Business.Interfaces
+namespace EBook.Data.Interfaces
 {
     public interface IRepository<T> where T : class // T represents any class, it is a generic type parameter,
                                                     // we can use it to create a repository for any type of entity,

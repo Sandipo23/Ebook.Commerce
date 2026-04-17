@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Business.Interfaces
+namespace EBook.Data.Interfaces
 {
     public interface IOrderDetailsRepository: IRepository<OrderDetails>
     {

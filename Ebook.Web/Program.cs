@@ -1,4 +1,5 @@
 
+using EBook.Data;
 using Ebook.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,9 @@ namespace Ebook.Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            // Register data dependencies
+            builder.Services.AddDataDependencies();
 
             var app = builder.Build();
 

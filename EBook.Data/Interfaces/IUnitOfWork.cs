@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Business.Interfaces
+namespace EBook.Data.Interfaces
 {
     public interface IUnitOfWork: IDisposable // Implementing IDisposable to ensure proper resource management, especially for database connections.
     {
