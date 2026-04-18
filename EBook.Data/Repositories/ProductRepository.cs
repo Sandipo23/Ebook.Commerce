@@ -1,6 +1,6 @@
 ﻿
+using Ebook.Common.Models.Entities;
 using Ebook.Data.Data;
-using EBook.Common.Entities;
 using EBook.Data.Interfaces;
 using System;
 using System.Collections.Generic;

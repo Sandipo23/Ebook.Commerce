@@ -1,13 +1,12 @@
-using EBook.Common.Entities;
-
+using Ebook.Common.Models.Entities;
 using System.Collections.Generic;
 
 namespace Ecommerce.Application.Interfaces
 {
     public interface IHomeService
     {
-        IEnumerable<Product> GetAllProducts();
-        Cart GetDetails(int productId);
-        bool SaveDetails(Cart cart);
+        Task<IEnumerable<Product>> GetAllProductsAsync();
+        Task<Cart> GetDetailsAsync(int productId);
+        Task<bool> SaveDetailsAsync(Cart cart);
     }
 }

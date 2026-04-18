@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EBook.Common.Entities
+namespace Ebook.Common.Models.Entities
 {
     public class Cart // This class represents a shopping cart item in an e-commerce application.
                       // It contains properties to store information about the cart item,

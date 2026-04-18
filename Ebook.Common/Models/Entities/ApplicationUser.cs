@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Common.Entities
+namespace Ebook.Common.Models.Entities
 {
     public class ApplicationUser: IdentityUser // this class inherits from IdentityUser,
                                                // which is a part of ASP.NET Core Identity framework.

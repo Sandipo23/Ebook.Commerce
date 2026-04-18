@@ -1,3 +1,7 @@
+using Ebook.Common.Models.Entities;
+using EBook.Business.Interfaces;
+using EBook.Business.ViewModel;
+using EBook.Data.Interfaces;
 using Ecommerce.Application.Interfaces;
 using Ecommerce.Application.ViewModels;
 
@@ -21,7 +25,7 @@ namespace EBook.Business.Services.CustomerServices
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public CartVM GetCartForUserAsync(ClaimsPrincipal user)
+        public async Task<CartVM> GetCartForUserAsync(ClaimsPrincipal user)
         {
             var claimsIdentity = (ClaimsIdentity)user.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -31,12 +35,12 @@ namespace EBook.Business.Services.CustomerServices
                 return null;
             }
 
-            var listCart = _unitOfWork.Cart.GetAll(
+            var listCart = _unitOfWork.Cart.GetAllAsync(
                 p => p.AppUserId == claim.Value, includeProperties: "Product");
 
             var cartVM = new CartVM
             {
-                ListCart = listCart,
+                ListCart =await listCart,
                 OrderProduct = new OrderProduct()
             };
 
@@ -55,14 +59,14 @@ namespace EBook.Business.Services.CustomerServices
             return claim?.Value;
         }
 
-        public CartVM GetCartViewModelAsync()
+        public async Task<CartVM> GetCartViewModelAsync()
         {
             string userId = GetUserId();
             if (userId == null)
                 return null;
 
-            var listCart = _unitOfWork.Cart.GetAll(p => p.AppUserId == userId, includeProperties: "Product");
-            var appUser = _unitOfWork.AppUser.GetFirstOrDefault(u => u.Id == userId);
+            var listCart = await _unitOfWork.Cart.GetAllAsync(p => p.AppUserId == userId, includeProperties: "Product");
+            var appUser = await _unitOfWork.AppUser.GetFirstOrDefaultAsync(u => u.Id == userId);
 
             var cartVM = new CartVM
             {
@@ -86,14 +90,14 @@ namespace EBook.Business.Services.CustomerServices
             return cartVM;
         }
 
-        public bool PlaceOrderAsync(CartVM cartVM)
+        public async Task<bool> PlaceOrderAsync(CartVM cartVM)
         {
             string userId = GetUserId();
             if (userId == null)
                 return false;
 
-            var listCart = _unitOfWork.Cart.GetAll(p => p.AppUserId == userId, includeProperties: "Product");
-            var appUser = _unitOfWork.AppUser.GetFirstOrDefault(u => u.Id == userId);
+            var listCart = await _unitOfWork.Cart.GetAllAsync(p => p.AppUserId == userId, includeProperties: "Product");
+            var appUser = await _unitOfWork.AppUser.GetFirstOrDefaultAsync(u => u.Id == userId);
 
             var orderProduct = new OrderProduct
             {
@@ -108,8 +112,8 @@ namespace EBook.Business.Services.CustomerServices
                 OrderPrice = listCart.Sum(c => c.Product.Price * c.Count)
             };
 
-            _unitOfWork.OrderProduct.Add(orderProduct);
-            _unitOfWork.Save();
+            await _unitOfWork.OrderProduct.AddAsync(orderProduct);
+            await _unitOfWork.SaveAsync();
 
             foreach (var cart in listCart)
             {
@@ -120,15 +124,15 @@ namespace EBook.Business.Services.CustomerServices
                     Price = cart.Product.Price * cart.Count,
                     Count = cart.Count
                 };
-                _unitOfWork.OrderDetails.Add(orderDetails);
+                await _unitOfWork.OrderDetails.AddAsync(orderDetails);
             }
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
-            var carts = _unitOfWork.Cart.GetAll(u => u.AppUserId == orderProduct.AppUserId);
-            _unitOfWork.Cart.RemoveRange(carts);
-            _unitOfWork.Save();
+            var carts = await _unitOfWork.Cart.GetAllAsync(u => u.AppUserId == orderProduct.AppUserId);
+            await _unitOfWork.Cart.RemoveRangeAsync(carts);
+            await _unitOfWork.SaveAsync();
 
-            int cartCount = (_unitOfWork.Cart.GetAll(u => u.AppUserId == userId)).Count();
+            int cartCount = (await _unitOfWork.Cart.GetAllAsync(u => u.AppUserId == userId)).Count();
             _httpContextAccessor.HttpContext.Session.SetInt32("SessionCartCount", cartCount);
 
             return true;
@@ -137,39 +141,39 @@ namespace EBook.Business.Services.CustomerServices
 
 
 
-        public bool IncreaseCartItem(int cartId)
+        public async Task<bool> IncreaseCartItemAsync(int cartId)
         {
-            var cart = _unitOfWork.Cart.GetFirstOrDefault(c => c.Id == cartId);
+            var cart = await _unitOfWork.Cart.GetFirstOrDefaultAsync(c => c.Id == cartId);
             if (cart == null)
                 return false;
 
             cart.Count += 1;
-            _unitOfWork.Cart.Update(cart);
-            _unitOfWork.Save();
+            await _unitOfWork.Cart.UpdateAsync(cart);
+            await _unitOfWork.SaveAsync();
 
             return true;
         }
 
 
-        public bool DecreaseCartItem(int cartId)
+        public async Task<bool> DecreaseCartItemAsync(int cartId)
         {
-            var cart = _unitOfWork.Cart.GetFirstOrDefault(c => c.Id == cartId);
+            var cart = await _unitOfWork.Cart.GetFirstOrDefaultAsync(c => c.Id == cartId);
             if (cart == null)
                 return false;
 
             if (cart.Count > 1)
             {
                 cart.Count -= 1;
-                _unitOfWork.Cart.Update(cart);
+                await _unitOfWork.Cart.UpdateAsync(cart);
             }
             else
             {
-                _unitOfWork.Cart.Remove(cart);
-                var cartCount = (_unitOfWork.Cart.GetAll(u => u.AppUserId == cart.AppUserId)).Count() - 1;
+                await _unitOfWork.Cart.RemoveAsync(cart);
+                var cartCount = (await _unitOfWork.Cart.GetAllAsync(u => u.AppUserId == cart.AppUserId)).Count() - 1;
                 _httpContextAccessor.HttpContext.Session.SetInt32("SessionCartCount", cartCount);
             }
 
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return true;
         }
 

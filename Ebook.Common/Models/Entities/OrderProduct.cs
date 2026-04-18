@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Common.Entities
+namespace Ebook.Common.Models.Entities
 {
     public class OrderProduct
     { 

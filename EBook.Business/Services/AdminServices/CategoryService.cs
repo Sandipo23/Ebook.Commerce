@@ -1,5 +1,5 @@
+using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
-using EBook.Common.Entities;
 using EBook.Data.Interfaces;
 using Ecommerce.Application.Interfaces;
 
@@ -29,7 +29,7 @@ namespace EBook.Business.Services.AdminServices
 
         public async Task CreateCategory(Category category)
         {
-            _unitOfWork.Category.Add(category);
+            await _unitOfWork.Category.AddAsync(category);
             await _unitOfWork.SaveAsync();
         } 
 

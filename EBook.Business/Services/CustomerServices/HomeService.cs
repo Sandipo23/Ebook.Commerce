@@ -1,3 +1,5 @@
+using Ebook.Common.Models.Entities;
+using EBook.Data.Interfaces;
 using Ecommerce.Application.Interfaces;
 
 using Microsoft.AspNetCore.Http;
@@ -20,57 +22,56 @@ namespace EBook.Business.Services.CustomerServices
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            IEnumerable<Product> productList =
-                _unitOfWork.Product.GetAll(includeProperties: "Category");
+            IEnumerable<Product> productList = await _unitOfWork.Product.GetAllAsync(includeProperties: "Category");
             return productList;
         } 
 
-        public Cart GetDetails(int productId)
+        public async Task<Cart> GetDetailsAsync(int productId)
         {
             Cart cart = new Cart()
             {
                 Count = 1,
                 ProductId = productId,
-                Product = _unitOfWork.Product
-                .GetFirstOrDefault(p => p.Id == productId, includeProperties: "Category"),
+                Product = await _unitOfWork.Product
+                .GetFirstOrDefaultAsync(p => p.Id == productId, includeProperties: "Category"),
             };
 
             return cart;
         }
 
-        private string GetUserId()
+        private async Task<string> GetUserId()
         {
             var claimsIdentity = (ClaimsIdentity)_httpContextAccessor.HttpContext.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             return claim?.Value;
         }
 
-        public bool SaveDetails(Cart cart)
+        public async Task<bool> SaveDetailsAsync(Cart cart)
         {
-            string userId = GetUserId();
+            string userId = await GetUserId();
             if (userId == null)
                 return false;
 
             cart.AppUserId = userId;
 
-            var cartDb = _unitOfWork.Cart.GetFirstOrDefault(
+            var cartDb = await _unitOfWork.Cart.GetFirstOrDefaultAsync(
                 p => p.AppUserId == userId && p.ProductId == cart.ProductId);
 
             if (cartDb == null)
             {
-                _unitOfWork.Cart.Add(cart);
+                await _unitOfWork.Cart.AddAsync(cart);
             }
             else
             {
                 cartDb.Count += cart.Count;
-                _unitOfWork.Cart.Update(cartDb);
+                await _unitOfWork.Cart.UpdateAsync(cartDb);
             }
 
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
-            int cartCount = (_unitOfWork.Cart.GetAll(u => u.AppUserId == userId)).Count();
+            int cartCount = (await _unitOfWork.Cart.GetAllAsync(u => u.AppUserId == userId)).Count();
             _httpContextAccessor.HttpContext.Session.SetInt32("SessionCartCount", cartCount);
 
             return true;

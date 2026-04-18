@@ -1,5 +1,5 @@
+using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
-using EBook.Common.Entities;
 using EBook.Data.Interfaces;
 
 using Ecommerce.Application.ViewModels;
@@ -86,7 +86,7 @@ namespace EBook.Business.Services.AdminServices
             if (productVM.Product.Id <= 0)
             {
                 // Create
-                _unitOfWork.Product.Add(productVM.Product);
+                await _unitOfWork.Product.AddAsync(productVM.Product);
             }
             else
             {

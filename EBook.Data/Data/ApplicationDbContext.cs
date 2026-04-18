@@ -1,4 +1,4 @@
-﻿using EBook.Common.Entities;
+﻿using Ebook.Common.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

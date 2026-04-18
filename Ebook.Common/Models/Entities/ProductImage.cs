@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EBook.Common.Entities
+namespace Ebook.Common.Models.Entities
 {
     public class ProductImage
     {

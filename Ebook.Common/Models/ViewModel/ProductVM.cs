@@ -1,5 +1,4 @@
-﻿using EBook.Common.Entities;
-
+﻿using Ebook.Common.Models.Entities;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;

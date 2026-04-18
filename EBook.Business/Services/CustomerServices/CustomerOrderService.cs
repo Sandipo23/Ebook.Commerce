@@ -1,3 +1,6 @@
+using Ebook.Common.Models.Entities;
+using EBook.Business.Interfaces;
+using EBook.Data.Interfaces;
 using Ecommerce.Application.Interfaces;
 
 using Microsoft.AspNetCore.Http;
@@ -27,24 +30,24 @@ namespace EBook.Business.Services.CustomerServices
             return claim?.Value;
         }
 
-        public IEnumerable<OrderProduct> GetUserOrdersAsync()
+        public async Task<IEnumerable<OrderProduct>> GetUserOrdersAsync()
         {
             string userId = GetUserId();
             if (userId == null)
                 return new List<OrderProduct>();
 
-            return _unitOfWork.OrderProduct.GetAll(u => u.AppUserId == userId);
+            return await _unitOfWork.OrderProduct.GetAllAsync(u => u.AppUserId == userId);
         }
 
-        public void CancelOrder(int id)
+        public async Task CancelOrderAsync(int id)
         {
-            var order = _unitOfWork.OrderProduct.GetFirstOrDefault(x => x.Id == id);
+            var order = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(x => x.Id == id);
 
             if (order.OrderStatus == "Ordered")
                 order.OrderStatus = "Cancel";
 
-            _unitOfWork.OrderProduct.Update(order);
-            _unitOfWork.Save();
+            await _unitOfWork.OrderProduct.UpdateAsync(order);
+            await _unitOfWork.SaveAsync();
         }
 
 

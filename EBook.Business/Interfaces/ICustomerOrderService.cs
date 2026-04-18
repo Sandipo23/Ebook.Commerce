@@ -1,12 +1,12 @@
 
-using EBook.Common.Entities;
+using Ebook.Common.Models.Entities;
 using System.Collections.Generic;
 
 namespace EBook.Business.Interfaces
 {
     public interface ICustomerOrderService
     {
-        IEnumerable<OrderProduct> GetUserOrdersAsync();
-        void CancelOrder(int id);
+        Task<IEnumerable<OrderProduct>> GetUserOrdersAsync();
+        Task CancelOrderAsync(int id);
     }
 }

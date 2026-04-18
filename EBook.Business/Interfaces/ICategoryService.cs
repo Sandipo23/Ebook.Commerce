@@ -1,6 +1,6 @@
 
 
-using EBook.Common.Entities;
+using Ebook.Common.Models.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

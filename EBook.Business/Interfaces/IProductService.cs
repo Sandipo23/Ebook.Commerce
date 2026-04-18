@@ -1,4 +1,4 @@
-using EBook.Common.Entities;
+using Ebook.Common.Models.Entities;
 using Ecommerce.Application.ViewModels;
 
 using Microsoft.AspNetCore.Http;

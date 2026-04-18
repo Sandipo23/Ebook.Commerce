@@ -1,6 +1,6 @@
+using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
 using EBook.Business.ViewModel;
-using EBook.Common.Entities;
 using EBook.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,11 @@ namespace EBook.Business.Services.AdminServices
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public OrderVM OrderVM { get; set; }
+        public OrderVM OrderVM { get; set; } // This line declares a public property named OrderVM of type OrderVM.
+                                             // This property is likely used to hold the details of an order,
+                                             // including the order product and its associated order details.
+                                             // The OrderVM class is probably a view model that encapsulates the
+                                             // data needed for displaying order information in the user interface.
         public OrderService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -38,8 +42,10 @@ namespace EBook.Business.Services.AdminServices
         {
             OrderVM = new OrderVM()
             {
-                OrderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == id, "AppUser"),
-                OrderDetails = await _unitOfWork.OrderDetails.GetAllAsync(od => od.OrderProductId == id, includeProperties: "Product")
+                OrderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == id, "AppUser"), // This line retrieves the first OrderProduct entity from the database that matches the specified id.
+                                                                                                                  // The "AppUser" parameter indicates that the related AppUser entity should also be included in the query result.
+                OrderDetails = await _unitOfWork.OrderDetails.GetAllAsync(od => od.OrderProductId == id, includeProperties: "Product") // This line retrieves all OrderDetails entities from the database
+                                                                                                                                       // that are associated with the specified OrderProduct id.
             };
             return OrderVM;
         }
@@ -59,7 +65,11 @@ namespace EBook.Business.Services.AdminServices
 
         public async Task<OrderVM> CancelOrderAsync(OrderVM orderVM)
         {
-            var orderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == orderVM.OrderProduct.Id);
+            var orderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == orderVM.OrderProduct.Id); // This line retrieves the first OrderProduct entity from the database that matches the specified id from the OrderVM object.
+                                                                                                                            // The id is accessed through orderVM.OrderProduct.Id,
+                                                                                                                            // which means it is looking for the OrderProduct associated with the provided OrderVM.,
+                                                                                                                            // we work on actual order product not the view model, we need to update the order product in the database,
+                                                                                                                            // so we need to retrieve it first using the id from the view model.
 
             orderProduct.OrderStatus = "Cancel";
             await _unitOfWork.OrderProduct.UpdateAsync(orderProduct);
