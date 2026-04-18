@@ -1,6 +1,7 @@
 using EBook.Business.Interfaces;
-
-
+using EBook.Business.ViewModel;
+using EBook.Common.Entities;
+using EBook.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,75 +20,75 @@ namespace EBook.Business.Services.AdminServices
         }
 
 
-        public void CreateOrder(OrderProduct order)
+
+        public async Task CreateOrderAsync(OrderProduct order)
         {
-            _unitOfWork.OrderProduct.Add(order);
-            _unitOfWork.Save();
+            await _unitOfWork.OrderProduct.AddAsync(order);
+            await _unitOfWork.SaveAsync();
         }
 
-        public IEnumerable<OrderProduct> GetAll()
+        public async Task<IEnumerable<OrderProduct>> GetAllAsync()
         {
-            var orderList = _unitOfWork.OrderProduct.GetAll(o => o.OrderStatus != "Delivered");
+            var orderList = await _unitOfWork.OrderProduct.GetAllAsync(o => o.OrderStatus != "Delivered");
 
             return orderList;
         }
 
-        public OrderVM Details(int id)
+        public async Task<OrderVM> DetailsAsync(int id)
         {
             OrderVM = new OrderVM()
             {
-                OrderProduct = _unitOfWork.OrderProduct.GetFirstOrDefault(o => o.Id == id, "AppUser"),
-                OrderDetails = _unitOfWork.OrderDetails.GetAll(od => od.OrderProductId == id, includeProperties: "Product")
+                OrderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == id, "AppUser"),
+                OrderDetails = await _unitOfWork.OrderDetails.GetAllAsync(od => od.OrderProductId == id, includeProperties: "Product")
             };
             return OrderVM;
         }
 
 
-        public OrderVM Delivered(OrderVM orderVM)
+        public async Task<OrderVM> DeliveredAsync(OrderVM orderVM)
         {
-            var orderProduct = _unitOfWork.OrderProduct.GetFirstOrDefault(op => op.Id == orderVM.OrderProduct.Id);
+            var orderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(op => op.Id == orderVM.OrderProduct.Id);
 
             orderProduct.OrderStatus = "Delivered";
-            _unitOfWork.OrderProduct.Update(orderProduct);
-            _unitOfWork.Save();
-
+            await _unitOfWork.OrderProduct.UpdateAsync(orderProduct);
+            await _unitOfWork.SaveAsync();
             return orderVM;
         }
 
 
 
-        public OrderVM CancelOrder(OrderVM orderVM)
+        public async Task<OrderVM> CancelOrderAsync(OrderVM orderVM)
         {
-            var orderProduct = _unitOfWork.OrderProduct.GetFirstOrDefault(o => o.Id == orderVM.OrderProduct.Id);
+            var orderProduct = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == orderVM.OrderProduct.Id);
 
             orderProduct.OrderStatus = "Cancel";
-            _unitOfWork.OrderProduct.Update(orderProduct);
-            _unitOfWork.Save();
+            await _unitOfWork.OrderProduct.UpdateAsync(orderProduct);
+            await _unitOfWork.SaveAsync();
             return OrderVM;
         }
 
 
-        public OrderVM UpdateOrderDetails(OrderVM orderVM)
+        public async Task<OrderVM> UpdateOrderDetailsAsync(OrderVM orderVM)
         {
-            var orderDetailsFromDb = _unitOfWork.OrderProduct.GetFirstOrDefault(o => o.Id == orderVM.OrderProduct.Id);
+            var orderDetailsFromDb = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == orderVM.OrderProduct.Id);
             orderDetailsFromDb.Name = orderVM.OrderProduct.Name;
             orderDetailsFromDb.Address = orderVM.OrderProduct.Address;
             orderDetailsFromDb.CellPhone = orderVM.OrderProduct.CellPhone;
             orderDetailsFromDb.PostalCode = orderVM.OrderProduct.PostalCode;
          
-            _unitOfWork.OrderProduct.Update(orderDetailsFromDb);
-            _unitOfWork.Save();
+            await _unitOfWork.OrderProduct.UpdateAsync(orderDetailsFromDb);
+            await _unitOfWork.SaveAsync();
             return orderVM;
         }
-        public void DeleteOrder(int? id)
+        public async Task DeleteOrderAsync(int? id)
         {
-            var order = _unitOfWork.OrderProduct.GetFirstOrDefault(o => o.Id == id);
+            var order = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(o => o.Id == id);
             if (order == null)
             {
                 return;
             }
-            _unitOfWork.OrderProduct.Remove(order);
-            _unitOfWork.Save();
+            await _unitOfWork.OrderProduct.RemoveAsync(order);
+            await _unitOfWork.SaveAsync();
         } 
 
     }

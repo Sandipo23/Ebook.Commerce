@@ -1,4 +1,6 @@
 using EBook.Business.Interfaces;
+using EBook.Common.Entities;
+using EBook.Data.Interfaces;
 using Ecommerce.Application.Interfaces;
 
 using System;
@@ -12,44 +14,46 @@ namespace EBook.Business.Services.AdminServices
     public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
-       public CategoryService(IUnitOfWork unitOfWork)
+       public CategoryService(IUnitOfWork unitOfWork) // Injecting the IUnitOfWork dependency through the constructor to ensure
+                                                      // that the service has access to the necessary repositories for data operations.
+                                                      // This promotes loose coupling and makes the service easier to test and maintain.
         {
             _unitOfWork = unitOfWork;
         } 
 
-        public IEnumerable<Category> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetAllCategories()
         {
-            IEnumerable<Category> categoryList =  _unitOfWork.Category.GetAll();
+            IEnumerable<Category> categoryList =  await _unitOfWork.Category.GetAllAsync();
             return categoryList;
         } 
 
-        public void CreateCategory(Category category)
+        public async Task CreateCategory(Category category)
         {
             _unitOfWork.Category.Add(category);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         } 
 
-        public Category GetCategoryById(int? id)
+        public async Task<Category> GetCategoryById(int? id)
         {
-            return _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
+            return await _unitOfWork.Category.GetFirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public void UpdateCategory(Category category)
+        public async Task UpdateCategory(Category category)
         {
-            _unitOfWork.Category.Update(category);
-            _unitOfWork.Save();
+            await _unitOfWork.Category.UpdateAsync(category);
+            await _unitOfWork.SaveAsync();
         } 
 
-        public bool DeleteCategory(int? id)
+        public async Task<bool> DeleteCategory(int? id)
         {
-            var category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
+            var category = await _unitOfWork.Category.GetFirstOrDefaultAsync(c => c.Id == id);
             if(category == null)
             {
                 return false;
             }
             
-                _unitOfWork.Category.Remove(category);
-                _unitOfWork.Save();
+                await _unitOfWork.Category.RemoveAsync(category);
+                await _unitOfWork.SaveAsync();
             return true;
         }
     }

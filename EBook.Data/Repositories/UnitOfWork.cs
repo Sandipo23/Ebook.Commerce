@@ -20,9 +20,9 @@ namespace EBook.Data.Repositories
         public IOrderProductRepository OrderProduct => new OrderProductRepository(_db);
         public IProductRepository Product => new ProductRepository(_db);
   
-        public void Save()
+        public async Task SaveAsync()
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         public void Dispose()
         {

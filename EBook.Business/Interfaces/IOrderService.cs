@@ -4,17 +4,18 @@
 using EBook.Business.ViewModel;
 using EBook.Common.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EBook.Business.Interfaces
 {
     public interface IOrderService
     {
-        void CreateOrder(OrderProduct order);
-        IEnumerable<OrderProduct> GetAll();
-        OrderVM Details(int id);
-        OrderVM Delivered(OrderVM orderVM);
-        OrderVM CancelOrder(OrderVM orderVM);
-        OrderVM UpdateOrderDetails(OrderVM orderVM);
-        void DeleteOrder(int? id);
+        Task CreateOrderAsync(OrderProduct order);
+        Task<IEnumerable<OrderProduct>> GetAllAsync();
+        Task<OrderVM> DetailsAsync(int id);
+        Task<OrderVM> DeliveredAsync(OrderVM orderVM);
+        Task<OrderVM> CancelOrderAsync(OrderVM orderVM);
+        Task<OrderVM> UpdateOrderDetailsAsync(OrderVM orderVM);
+        Task DeleteOrderAsync(int? id);
     }
 }

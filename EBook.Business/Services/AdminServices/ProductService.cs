@@ -1,10 +1,15 @@
-using Ecommerce.Application.Interfaces;
+using EBook.Business.Interfaces;
+using EBook.Common.Entities;
+using EBook.Data.Interfaces;
+
 using Ecommerce.Application.ViewModels;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,24 +20,30 @@ namespace EBook.Business.Services.AdminServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private string _wwwRootPath;
-        public ProductService(IUnitOfWork unitOfWork, IWebHostEnvironment  env)
+        public ProductService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _wwwRootPath = env.WebRootPath;
+
         }
 
-        public IEnumerable<Domain.Entities.Product> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll();
+            IEnumerable<Product> productList = await _unitOfWork.Product.GetAllAsync();
             return productList;
         }
 
-        public ProductVM GetProductVM(int? id)
+        public async Task<ProductVM> GetProductVMAsync(int? id)
         {
-            ProductVM productVM = new ProductVM()
+            ProductVM productVM = new ProductVM() // this line is creating a new instance of the ProductVM class and initializing its properties.
+                                                  // The Product property is set to a new instance of the Product class, and the CategoryList property is
+                                                  // populated with a list of SelectListItem objects created from the categories retrieved from the database
+                                                  // using the _unitOfWork.Category.GetAllAsync() method.
+                                                  // Each SelectListItem has its Text property set to the category name
+                                                  // and its Value property set to the category ID as a string.
             {
                 Product = new Product(),
-                CategoryList = _unitOfWork.Category.GetAll().Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                CategoryList = (await _unitOfWork.Category.GetAllAsync())
+                .Select(c => new SelectListItem
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
@@ -41,26 +52,27 @@ namespace EBook.Business.Services.AdminServices
 
             if (id.HasValue && id > 0)
             {
-                productVM.Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+                productVM.Product = await _unitOfWork.Product.GetFirstOrDefaultAsync(p => p.Id == id);
             }
             return productVM;
         }
 
-        public void UpSertProduct(ProductVM productVM, IFormFile file)
+        public async Task UpSertProductAsync(ProductVM productVM, IFormFile file)
         {
 
             if (file != null)
             {
                 string fileName = Guid.NewGuid().ToString();
-                var uploadRoot =  Path.Combine(_wwwRootPath, "img","products");
+                var uploadRoot =Path.Combine(_wwwRootPath, "img","products");
                 var extension = Path.GetExtension(file.FileName);
 
-                if(!string.IsNullOrEmpty(productVM.Product.Picture))
+                if(!string.IsNullOrEmpty(productVM.Product.Picture)) // this line checks if the Picture property of the Product object within the ProductVM instance
+                                                                     // is not null or empty.
                 {
                     var oldImagePath = Path.Combine(_wwwRootPath, productVM.Product.Picture);
-                    if (System.IO.File.Exists(oldImagePath))
+                    if (File.Exists(oldImagePath))
                     {
-                        System.IO.File.Delete(oldImagePath);
+                        File.Delete(oldImagePath);
                     }
                 } 
 
@@ -79,18 +91,18 @@ namespace EBook.Business.Services.AdminServices
             else
             {
                 // Update
-                _unitOfWork.Product.Update(productVM.Product);
+                await _unitOfWork.Product.UpdateAsync(productVM.Product);
             }
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         } 
 
 
-        public void DeleteProduct(int? id)
+        public async Task DeleteProductAsync(int? id)
         {
-            var product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+            var product = await _unitOfWork.Product.GetFirstOrDefaultAsync(p => p.Id == id);
           
-            _unitOfWork.Product.Remove(product);
-            _unitOfWork.Save();
+            await _unitOfWork.Product.RemoveAsync(product);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

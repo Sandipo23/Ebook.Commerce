@@ -19,6 +19,7 @@ namespace EBook.Data.Interfaces
 
         IProductRepository Product { get; }
 
-        void Save();
+      
+        Task SaveAsync();
     }
 }

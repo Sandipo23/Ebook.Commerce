@@ -19,14 +19,14 @@ namespace EBook.Data.Repositories
             _dbSet = _context.Set<T>();
         }
 
-        public void Add(T entity) // This method adds a new entity to the DbSet<T>,
+        public async Task AddAsync(T entity) // This method adds a new entity to the DbSet<T>,
                                   // which will be tracked by the context and eventually saved to the database
                                   // when SaveChanges is called on the context.
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = _dbSet; // this line initializes the query variable with the DbSet<T>,
                                           // which represents the collection of entities of type T in the database.
@@ -42,10 +42,10 @@ namespace EBook.Data.Repositories
                 }
             }
 
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties)
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = _dbSet;
             if (filter != null)
@@ -60,20 +60,20 @@ namespace EBook.Data.Repositories
                 }
             }
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
-        public void Remove(T entity)
+        public async Task RemoveAsync(T entity)
         {
             _dbSet.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
            _dbSet.RemoveRange(entities);
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
            _dbSet.Update(entity);
         }

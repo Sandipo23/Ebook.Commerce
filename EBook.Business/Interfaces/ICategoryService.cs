@@ -2,15 +2,16 @@
 
 using EBook.Common.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EBook.Business.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetAllCategories();
-        void CreateCategory(Category category);
-        Category GetCategoryById(int? id);
-        void UpdateCategory(Category category);
-        bool DeleteCategory(int? id);
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task CreateCategory(Category category);
+        Task<Category> GetCategoryById(int? id);
+        Task UpdateCategory(Category category);
+        Task<bool> DeleteCategory(int? id);
     }
 }

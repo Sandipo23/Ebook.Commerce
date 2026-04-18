@@ -11,11 +11,11 @@ namespace EBook.Data.Interfaces
                                                     // we can use it to create a repository for any type of entity,
                                                     // such as Product, Category, Order, etc.
     {
-        void Add(T entity);
-        T GetFirstOrDefault(Expression<Func<T, bool>> predicate, string? includeProperties = null);
-        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null,  string? includeProperties = null);
-        void Update(T entity);
-        void Remove(T entity);
-        void RemoveRange(IEnumerable<T> entities);
+        Task AddAsync(T entity);
+        Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate, string? includeProperties = null);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
+        Task UpdateAsync(T entity);
+        Task RemoveAsync(T entity);
+        Task RemoveRangeAsync(IEnumerable<T> entities);
     }
 }
