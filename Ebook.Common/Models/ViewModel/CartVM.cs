@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Business.ViewModel
+namespace EBook.Common.Models.ViewModel
 {
     public class CartVM // This ViewModel is used to represent the data needed for the Cart view,
                         // including the OrderProduct and the list of Cart items.

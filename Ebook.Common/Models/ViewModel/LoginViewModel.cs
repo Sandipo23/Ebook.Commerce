@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EBook.Business.ViewModel
+namespace EBook.Common.Models.ViewModel
 {
     public class LoginViewModel
     {
