@@ -1,4 +1,5 @@
 
+using EBook.Business;
 using EBook.Data;
 using Ebook.Data.Data;
 using Microsoft.AspNetCore.Identity;
@@ -21,9 +22,12 @@ namespace Ebook.Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpContextAccessor(); //this line is used to access the HttpContext in the services and controllers and
+                                                       //this will be used to get the current user and other information from the HttpContext.
 
             // Register data dependencies
             builder.Services.AddDataDependencies();
+            builder.Services.AddBusinessDependencies();
 
             var app = builder.Build();
 
