@@ -1,9 +1,9 @@
-
 using EBook.Business;
 using EBook.Data;
 using Ebook.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Ebook.Common.Models.Entities;
 
 namespace Ebook.Web
 {
@@ -19,7 +19,8 @@ namespace Ebook.Web
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor(); //this line is used to access the HttpContext in the services and controllers and
@@ -47,6 +48,7 @@ namespace Ebook.Web
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
