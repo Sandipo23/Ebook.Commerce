@@ -1,5 +1,7 @@
-﻿using EBook.Data.Interfaces;
+﻿using Ebook.Data.Data;
+using EBook.Data.Interfaces;
 using EBook.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EBook.Data
@@ -8,6 +10,7 @@ namespace EBook.Data
     {
         public static IServiceCollection AddDataDependencies(this IServiceCollection services)
         {
+           
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<ICartRepository, CartRepository>();

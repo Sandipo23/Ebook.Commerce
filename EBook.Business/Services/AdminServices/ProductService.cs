@@ -1,8 +1,7 @@
 using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
+using EBook.Common.ViewModel;
 using EBook.Data.Interfaces;
-
-using Ecommerce.Application.ViewModels;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

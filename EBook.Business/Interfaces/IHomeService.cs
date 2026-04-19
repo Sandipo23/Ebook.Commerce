@@ -1,7 +1,7 @@
 using Ebook.Common.Models.Entities;
 using System.Collections.Generic;
 
-namespace Ecommerce.Application.Interfaces
+namespace EBook.Business.Interfaces
 {
     public interface IHomeService
     {

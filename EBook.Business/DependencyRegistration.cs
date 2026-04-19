@@ -1,7 +1,7 @@
 ﻿using EBook.Business.Interfaces;
 using EBook.Business.Services.AdminServices;
 using EBook.Business.Services.CustomerServices;
-using Ecommerce.Application.Interfaces;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EBook.Business

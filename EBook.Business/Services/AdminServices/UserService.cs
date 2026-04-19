@@ -1,8 +1,6 @@
 using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
 using EBook.Business.ViewModel;
-using Ecommerce.Application.Interfaces;
-using Ecommerce.Application.ViewModels;
 
 using Microsoft.AspNetCore.Identity;
 

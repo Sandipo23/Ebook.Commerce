@@ -13,6 +13,8 @@ namespace Ebook.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
+          
+
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -26,6 +28,7 @@ namespace Ebook.Web
             builder.Services.AddHttpContextAccessor(); //this line is used to access the HttpContext in the services and controllers and
                                                        //this will be used to get the current user and other information from the HttpContext.
 
+            
             // Register data dependencies
             builder.Services.AddDataDependencies();
             builder.Services.AddBusinessDependencies();
