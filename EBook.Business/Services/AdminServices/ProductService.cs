@@ -18,11 +18,12 @@ namespace EBook.Business.Services.AdminServices
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
+      
         private string _wwwRootPath;
-        public ProductService(IUnitOfWork unitOfWork)
+        public ProductService(IUnitOfWork unitOfWork, IWebHostEnvironment env)
         {
             _unitOfWork = unitOfWork;
-
+            _wwwRootPath = env.WebRootPath;
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
