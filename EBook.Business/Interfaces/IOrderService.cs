@@ -2,7 +2,7 @@
 
 
 using Ebook.Common.Models.Entities;
-using EBook.Business.ViewModel;
+using EBook.Common.Models.ViewModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

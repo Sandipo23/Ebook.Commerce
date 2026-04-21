@@ -1,5 +1,5 @@
-using EBook.Business.ViewModel;
 
+using EBook.Common.Models.ViewModel;
 using System.Security.Claims;
 
 namespace EBook.Business.Interfaces

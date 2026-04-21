@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace EBook.Common.Models.ViewModel
 {
-    public class RegisterViewModel
+    public class RegisterViewModel  //This class is used to represent the data that is needed to register a new user.
+                                    // The properties are decorated with data annotations to specify validation rules for the input data.
     {
         [Required, EmailAddress]
         public string Email { get; set; }

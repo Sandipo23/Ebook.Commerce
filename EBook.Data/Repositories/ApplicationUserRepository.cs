@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace EBook.Data.Repositories
 {
-    public  class ApplicationUserRepository : Repository<ApplicationUser> ,IApplicationUserRepository
+    public  class ApplicationUserRepository : Repository<ApplicationUser> , IApplicationUserRepository // this class is a repository for the ApplicationUser entity,
+                                                                                                       // it inherits from the Repository class and implements the IApplicationUserRepository interface.
     { 
         private  ApplicationDbContext _db; // allows us to access the database context and perform operations on the ApplicationUser entity
                                            // , such as adding, updating, deleting, and retrieving users from the database.

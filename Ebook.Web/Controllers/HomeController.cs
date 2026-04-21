@@ -1,5 +1,6 @@
 
-using Ebook.Business.ViewModel;
+
+using EBook.Common.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

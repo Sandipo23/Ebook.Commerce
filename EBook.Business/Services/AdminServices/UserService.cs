@@ -1,20 +1,22 @@
 using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
-using EBook.Business.ViewModel;
-
+using EBook.Common.Models.ViewModel;
+using EBook.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace EBook.Business.Services.AdminServices
 {
     public class UserService : IUserService
     {
-
-        private readonly UserManager<ApplicationUser> _userManager;
+          private readonly UserManager<ApplicationUser> _userManager; // is a service provided by ASP.NET Core Identity framework that allows us to
+                                                                    // manage user accounts, including creating, updating, deleting, and retrieving users from the database.
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserService(UserManager<ApplicationUser> userManager,
+        public UserService(
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
+            
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -37,7 +39,11 @@ namespace EBook.Business.Services.AdminServices
 
             //Customer
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Customer"); // this line assigns the newly created user to the "Customer" role,
+                                                                                  // which is a predefined role in the application that grants specific permissions
+                                                                                  // and access rights to users assigned to it.
+                                                                                  // By adding the user to the "Customer" role, we can control what actions and
+                                                                                  // features they can access within the application based on their role.
 
             if (!roleResult.Succeeded)
                 return IdentityResult.Failed(roleResult.Errors.ToArray());

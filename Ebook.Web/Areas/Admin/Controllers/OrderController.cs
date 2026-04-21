@@ -1,5 +1,5 @@
 ﻿using EBook.Business.Interfaces;
-using EBook.Business.ViewModel;
+using EBook.Common.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
