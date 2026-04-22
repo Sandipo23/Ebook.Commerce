@@ -39,7 +39,7 @@ namespace EBook.Business.Services.AdminServices
 
             //Customer
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Admin"); // this line assigns the newly created user to the "Customer" role,
+            var roleResult = await _userManager.AddToRoleAsync(user, "Customer"); // this line assigns the newly created user to the "Customer" role,
                                                                                   // which is a predefined role in the application that grants specific permissions
                                                                                   // and access rights to users assigned to it.
                                                                                   // By adding the user to the "Customer" role, we can control what actions and
