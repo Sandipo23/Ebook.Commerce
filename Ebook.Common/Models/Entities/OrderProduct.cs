@@ -19,6 +19,6 @@ namespace Ebook.Common.Models.Entities
         public string PostalCode { get; set; }
         public string Name { get; set; }
         [ForeignKey("AppUserId")]
-        public ApplicationUser AppcUser { get; set; }
+        public ApplicationUser AppUser { get; set; }
     }
 }

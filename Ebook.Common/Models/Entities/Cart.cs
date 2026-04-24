@@ -9,7 +9,9 @@ namespace Ebook.Common.Models.Entities
                       // The class also includes navigation properties to establish relationships
                       // with the ApplicationUser and Product entities.
     {
-        public Cart()
+        public Cart() // This constructor initializes the Count property to 1 when a new Cart object is created.
+                      // This means that when a user adds a product to their cart, it will start with a
+                      // quantity of 1 by default.
         {
             Count = 1;
         }

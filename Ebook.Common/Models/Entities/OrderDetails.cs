@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Ebook.Common.Models.Entities
 {
     public class OrderDetails
-    {
+    { 
          public int Id { get; set; }
         public int OrderProductId { get; set; }
         public int ProductId { get; set; }

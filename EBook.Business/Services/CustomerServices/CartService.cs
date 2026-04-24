@@ -26,7 +26,7 @@ namespace EBook.Business.Services.CustomerServices
 
         public async Task<CartVM> GetCartForUserAsync(ClaimsPrincipal user)
         {
-            var claimsIdentity = (ClaimsIdentity)user.Identity;
+            var claimsIdentity = (ClaimsIdentity)user.Identity; // this line is to get the claims identity of the user, which contains the claims (like user ID, roles, etc.) associated with the authenticated user.
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             if (claim == null)
@@ -34,12 +34,12 @@ namespace EBook.Business.Services.CustomerServices
                 return null;
             }
 
-            var listCart = _unitOfWork.Cart.GetAllAsync(
+            var listCart = await _unitOfWork.Cart.GetAllAsync(
                 p => p.AppUserId == claim.Value, includeProperties: "Product");
 
             var cartVM = new CartVM
             {
-                ListCart =await listCart,
+                ListCart = listCart,
                 OrderProduct = new OrderProduct()
             };
 
@@ -66,13 +66,14 @@ namespace EBook.Business.Services.CustomerServices
 
             var listCart = await _unitOfWork.Cart.GetAllAsync(p => p.AppUserId == userId, includeProperties: "Product");
             var appUser = await _unitOfWork.AppUser.GetFirstOrDefaultAsync(u => u.Id == userId);
+            
 
             var cartVM = new CartVM
             {
                 ListCart = listCart,
                 OrderProduct = new OrderProduct
                 {
-                    AppcUser = appUser,
+                    AppUser = appUser,
                     Name = appUser.FullName,
                     CellPhone = appUser.CellPhone,
                     Address = appUser.Address,
@@ -100,7 +101,7 @@ namespace EBook.Business.Services.CustomerServices
 
             var orderProduct = new OrderProduct
             {
-                AppcUser = appUser,
+                AppUser = appUser,
                 OrderDate = DateTime.Now,
                 AppUserId = userId,
                 Name = cartVM.OrderProduct.Name,
@@ -168,7 +169,7 @@ namespace EBook.Business.Services.CustomerServices
             else
             {
                 await _unitOfWork.Cart.RemoveAsync(cart);
-                var cartCount = (await _unitOfWork.Cart.GetAllAsync(u => u.AppUserId == cart.AppUserId)).Count() - 1;
+                var cartCount = (await _unitOfWork.Cart.GetAllAsync(u => u.AppUserId == cart.AppUserId)).Count() - 1; // decrease the cart count by 1 since we removed an item from the cart
                 _httpContextAccessor.HttpContext.Session.SetInt32("SessionCartCount", cartCount);
             }
 
