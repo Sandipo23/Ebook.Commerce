@@ -1,4 +1,4 @@
-﻿using Ebook.Common.Models.Entities;
+using Ebook.Common.Models.Entities;
 using EBook.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EBook.Store.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
 
     public class CategoryController : Controller
     {
@@ -31,8 +31,7 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost( "/Category/Create")]
-
+        [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
             if (ModelState.IsValid)

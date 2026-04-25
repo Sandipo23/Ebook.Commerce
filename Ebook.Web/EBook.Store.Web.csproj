@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Customer\Controllers\" />
+    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\img\products\" />
   </ItemGroup>
 

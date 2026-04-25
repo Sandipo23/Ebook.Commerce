@@ -1,4 +1,4 @@
-﻿using EBook.Business.Interfaces;
+using EBook.Business.Interfaces;
 using EBook.Common.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +32,23 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
             [HttpPost]
             public async Task<IActionResult> Upsert(ProductVM vm, IFormFile file)
             {
-                await _productService.UpSertProductAsync(vm, file);
+                if (!ModelState.IsValid)
+                {
+                    var refreshedVM = await _productService.GetProductVMAsync(vm.Product.Id > 0 ? vm.Product.Id : null);
+                    vm.CategoryList = refreshedVM.CategoryList;
+                    return View(vm);
+                }
+                try
+                {
+                    await _productService.UpSertProductAsync(vm, file);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError("Product.CategoryId", ex.Message);
+                    var refreshedVM = await _productService.GetProductVMAsync(vm.Product.Id > 0 ? vm.Product.Id : null);
+                    vm.CategoryList = refreshedVM.CategoryList;
+                    return View(vm);
+                }
                 return RedirectToAction(nameof(Index));
             }
 

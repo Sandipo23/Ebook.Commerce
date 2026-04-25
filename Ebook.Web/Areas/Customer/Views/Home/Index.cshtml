@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Product>
+﻿@model IEnumerable<Ebook.Common.Models.Entities.Product>
 
 <div class="row py-2">
     @foreach (var item in Model)
@@ -20,7 +19,7 @@
                             </div>
                         </div>
                         <div>
-                            <a asp-action="Details" class="btn btn-primary form-control" asp-route-productId="@item.Id">Details</a>
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Details" class="btn btn-primary form-control" asp-route-id="@item.Id">Details</a>
                         </div>
                     </div>
                 </div>

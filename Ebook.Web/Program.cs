@@ -32,6 +32,7 @@ namespace Ebook.Web
             // Register data dependencies
             builder.Services.AddDataDependencies();
             builder.Services.AddBusinessDependencies();
+            builder.Services.AddWebDependencies();
 
             //session & cookies
             builder.Services.AddDistributedMemoryCache();
@@ -80,15 +81,42 @@ namespace Ebook.Web
             app.UseAuthorization();
 
             app.MapStaticAssets();
-            app.MapControllerRoute(
-                name: "areas",
-                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            //app.MapControllerRoute(
+            //    name: "areas",
+            //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}")
+            //    .WithStaticAssets();
+
+            //app.MapControllerRoute(
+            //    name: "default_admin",
+            //    pattern: "",
+            //    defaults: new { area = "Admin", controller = "Home", action = "Index" });
 
             app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
-           
+    name: "default",
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
+            // Root goes to Admin/Home/Index (optional, if you want Admin as default homepage)
+            //app.MapControllerRoute(
+            //    name: "default_admin",
+            //    pattern: "",
+            //    defaults: new { area = "Admin", controller = "Home", action = "Index" });
+
+            //// Area routes
+            //app.MapControllerRoute(
+            //    name: "areas",
+            //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            //// Non-area routes
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
             app.Run();
         }

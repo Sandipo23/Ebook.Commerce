@@ -1,4 +1,4 @@
-﻿@model ProductVM
+@model ProductVM
 
 <h2>@(Model.Product.Id <= 0 ? "Add" : "Edit") Product </h2>
 
@@ -32,8 +32,9 @@
     <div class="row my-1">
         <label asp-for="Product.CategoryId"></label>
         <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-control">
-            <option disabled selected> --Please Select a Category-- </option>
+            <option disabled selected value=""> --Please Select a Category-- </option>
         </select>
+        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
     </div>
 
     <div class="row my-1">

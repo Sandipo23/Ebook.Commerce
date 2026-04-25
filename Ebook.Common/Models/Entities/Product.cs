@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Ebook.Common.Models.Entities
         public string Description { get; set; }
         public string BarCode { get; set; }
         public double Price { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
         public int CategoryId { get; set; }
         public string? Picture { get; set; }
         [ForeignKey("CategoryId")]

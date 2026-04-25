@@ -1,11 +1,13 @@
 
 using EBook.Business.Interfaces;
 using EBook.Common.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EBook.Store.Web
+namespace EBook.Store.Web.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartSerivce;
@@ -17,9 +19,9 @@ namespace EBook.Store.Web
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var cartVM = _cartSerivce.GetCartForUserAsync(User);
+            var cartVM = await _cartSerivce.GetCartForUserAsync(User);
             if (cartVM == null)
             {
                 return RedirectToAction("Login", "Account");
@@ -27,9 +29,9 @@ namespace EBook.Store.Web
             return View(cartVM);
         }
 
-        public IActionResult Order()
+        public async Task<IActionResult> Order()
         {
-            var cartVM = _cartSerivce.GetCartViewModelAsync();
+            var cartVM = await _cartSerivce.GetCartViewModelAsync();
             if (cartVM == null)
             {
                 return RedirectToAction("Login", "Account");

@@ -59,6 +59,11 @@ namespace EBook.Business.Services.AdminServices
 
         public async Task UpSertProductAsync(ProductVM productVM, IFormFile file)
         {
+            var categoryExists = await _unitOfWork.Category.GetFirstOrDefaultAsync(c => c.Id == productVM.Product.CategoryId);
+            if (categoryExists == null)
+            {
+                throw new InvalidOperationException("The selected category does not exist. Please choose a valid category.");
+            }
 
             if (file != null)
             {
