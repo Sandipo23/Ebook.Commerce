@@ -27,6 +27,11 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var order = await _orderService.DetailsAsync(id);
+            if (order?.OrderProduct == null)
+            {
+                return NotFound();
+            }
+
             return View(order);
         }
 
@@ -34,6 +39,11 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Delivered(OrderVM orderVM)
         {
             var order = await _orderService.DeliveredAsync(orderVM);
+            if (order?.OrderProduct == null)
+            {
+                return NotFound();
+            }
+
             return RedirectToAction("Details", "Order", new { Id = order.OrderProduct.Id });
         }
 
@@ -41,6 +51,11 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
         public async Task<IActionResult> CancelOrder(OrderVM orderVM)
         {
             var order = await _orderService.CancelOrderAsync(orderVM);
+            if (order?.OrderProduct == null)
+            {
+                return NotFound();
+            }
+
             return RedirectToAction("Details", "Order", new { Id = order.OrderProduct.Id });
         }
 
@@ -48,6 +63,11 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateOrderDetails(OrderVM orderVM)
         {
             var order = await _orderService.UpdateOrderDetailsAsync(orderVM);
+            if (order?.OrderProduct == null)
+            {
+                return NotFound();
+            }
+
             return RedirectToAction("Details", "Order", new { Id = order.OrderProduct.Id });
         }
 

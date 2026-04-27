@@ -17,9 +17,17 @@ namespace EBook.Store.Web.Areas.Customer.Controllers
             _homeService = homeService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             IEnumerable<Product> productList = await _homeService.GetAllProductsAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                productList = productList.Where(p => p.Name != null && p.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
+            ViewData["CurrentFilter"] = searchString; // this line is used to keep the search string in the search box after the search is performed.
+                                                      // It will be used in the view to set the value of the search box.
 
             return View(productList);
         } 
