@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace EBook.Business.Services.AdminServices
 {
-    public class ProductService : IProductService
+    public class ProductService : IProductService // this class implements the IProductService interface,
     {
         private readonly IUnitOfWork _unitOfWork;
       
@@ -32,14 +32,9 @@ namespace EBook.Business.Services.AdminServices
             return productList;
         }
 
-        public async Task<ProductVM> GetProductVMAsync(int? id)
+        public async Task<ProductVM> GetProductVMAsync(int? id) 
         {
-            ProductVM productVM = new ProductVM() // this line is creating a new instance of the ProductVM class and initializing its properties.
-                                                  // The Product property is set to a new instance of the Product class, and the CategoryList property is
-                                                  // populated with a list of SelectListItem objects created from the categories retrieved from the database
-                                                  // using the _unitOfWork.Category.GetAllAsync() method.
-                                                  // Each SelectListItem has its Text property set to the category name
-                                                  // and its Value property set to the category ID as a string.
+            ProductVM productVM = new ProductVM() 
             {
                 Product = new Product(),
                 CategoryList = (await _unitOfWork.Category.GetAllAsync())
@@ -50,7 +45,10 @@ namespace EBook.Business.Services.AdminServices
                 })
             };
 
-            if (id.HasValue && id > 0)
+            if (id.HasValue && id > 0) // this line checks if the id parameter has a value and if that value is greater than 0.
+                                       // then it retrieves the first product from the database that matches the given id and assigns
+                                       // it to the Product property of the ProductVM instance. This allows the method to return a
+                                       // ProductVM that contains the details of the specified product along with a list of categories for selection.
             {
                 productVM.Product = await _unitOfWork.Product.GetFirstOrDefaultAsync(p => p.Id == id);
             }
@@ -99,15 +97,17 @@ namespace EBook.Business.Services.AdminServices
                 await _unitOfWork.Product.UpdateAsync(productVM.Product);
             }
             await _unitOfWork.SaveAsync();
-        } 
+        }
 
 
         public async Task DeleteProductAsync(int? id)
         {
             var product = await _unitOfWork.Product.GetFirstOrDefaultAsync(p => p.Id == id);
-          
-            await _unitOfWork.Product.RemoveAsync(product);
-            await _unitOfWork.SaveAsync();
+            if (product != null)
+            {
+                await _unitOfWork.Product.RemoveAsync(product);
+                await _unitOfWork.SaveAsync();
+            }
         }
     }
 }

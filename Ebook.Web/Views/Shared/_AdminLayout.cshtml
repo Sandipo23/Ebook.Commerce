@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = null;
     var title = ViewBag.Title ?? "Dashboard";
 }
@@ -73,6 +73,7 @@
                         <li class="breadcrumb-item active">@title</li>
                     </ol>
                     <div class="ms-auto d-flex align-items-center">
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary me-3">Back to Store</a>
                         <partial name="_LoginPartial" />
                        
                     </div>

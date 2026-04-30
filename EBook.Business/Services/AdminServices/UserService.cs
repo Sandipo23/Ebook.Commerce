@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EBook.Business.Services.AdminServices
 {
-    public class UserService : IUserService
+    public class UserService : IUserService // this class is responsible for handling user-related operations
+                                            // such as registration, login, and logout. It uses the UserManager and SignInManager services provided by ASP.NET Core Identity to manage user accounts and authentication.
     {
           private readonly UserManager<ApplicationUser> _userManager; // is a service provided by ASP.NET Core Identity framework that allows us to
                                                                     // manage user accounts, including creating, updating, deleting, and retrieving users from the database.

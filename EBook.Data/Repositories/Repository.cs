@@ -16,7 +16,7 @@ namespace EBook.Data.Repositories
         public Repository(ApplicationDbContext context)
         {
             _context = context;
-            _dbSet = _context.Set<T>();
+            _dbSet = _context.Set<T>(); // this line initializes the _dbSet field with the DbSet<T> from the context, which allows us to perform CRUD operations on the entities of type T.
         }
 
         public async Task AddAsync(T entity) // This method adds a new entity to the DbSet<T>,
@@ -65,7 +65,7 @@ namespace EBook.Data.Repositories
 
         public async Task RemoveAsync(T entity)
         {
-            _dbSet.Remove(entity);
+           _dbSet.Remove(entity);
         }
 
         public async Task RemoveRangeAsync(IEnumerable<T> entities)

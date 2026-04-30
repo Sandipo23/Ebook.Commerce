@@ -13,7 +13,7 @@ namespace Ebook.Common.Models.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string BarCode { get; set; }
+        public string? BarCode { get; set; }
         public double Price { get; set; }
         [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
         public int CategoryId { get; set; }

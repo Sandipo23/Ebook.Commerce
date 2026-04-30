@@ -85,15 +85,7 @@ namespace Ebook.Web
             //    name: "areas",
             //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}")
-            //    .WithStaticAssets();
-
-            //app.MapControllerRoute(
-            //    name: "default_admin",
-            //    pattern: "",
-            //    defaults: new { area = "Admin", controller = "Home", action = "Index" });
+           
 
             app.MapControllerRoute(
     name: "default",
@@ -106,16 +98,7 @@ namespace Ebook.Web
             //    pattern: "",
             //    defaults: new { area = "Admin", controller = "Home", action = "Index" });
 
-            //// Area routes
-            //app.MapControllerRoute(
-            //    name: "areas",
-            //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-            //// Non-area routes
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            
 
 
             app.Run();

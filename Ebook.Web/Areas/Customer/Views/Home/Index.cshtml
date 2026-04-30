@@ -1,13 +1,6 @@
 @model IEnumerable<Ebook.Common.Models.Entities.Product>
 
-@if (User.IsInRole("Admin"))
-{
-    <div class="row pb-2">
-        <div class="col-12 text-end">
-            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-warning">Go to Admin Panel</a>
-        </div>
-    </div>
-}
+
 
 <form asp-controller="Home" asp-action="Index" method="get">
     <div class="row pb-3">

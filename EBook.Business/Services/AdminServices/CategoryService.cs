@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 
 namespace EBook.Business.Services.AdminServices
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService 
     {
         private readonly IUnitOfWork _unitOfWork;
-       public CategoryService(IUnitOfWork unitOfWork) // Injecting the IUnitOfWork dependency through the constructor to ensure
-                                                      // that the service has access to the necessary repositories for data operations.
-                                                      // This promotes loose coupling and makes the service easier to test and maintain.
+       public CategoryService(IUnitOfWork unitOfWork) 
         {
             _unitOfWork = unitOfWork;
         } 
