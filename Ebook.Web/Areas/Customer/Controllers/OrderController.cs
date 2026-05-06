@@ -30,7 +30,7 @@ namespace Ecommerce.Web.Areas.Customer.Controllers
         public async Task<IActionResult> CancelOrder(int id)
         {
             await _orderService.CancelOrderAsync(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); 
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Ebook.Web
 
             app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}")
     .WithStaticAssets();
 
             // Root goes to Admin/Home/Index (optional, if you want Admin as default homepage)

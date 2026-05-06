@@ -39,7 +39,9 @@ namespace EBook.Business.Services.CustomerServices
             return await _unitOfWork.OrderProduct.GetAllAsync(u => u.AppUserId == userId);
         }
 
-        public async Task CancelOrderAsync(int id)
+        public async Task CancelOrderAsync(int id) // this method will be called when the user clicks on the cancel button in the order details page,
+                                                   // it will check if the order is not delivered yet, if it's not delivered it will change the order status to cancel,
+                                                   // if it's delivered it will do nothing
         {
             string userId = GetUserId();
             if (userId == null)
