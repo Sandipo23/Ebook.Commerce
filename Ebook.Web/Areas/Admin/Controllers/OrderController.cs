@@ -1,4 +1,4 @@
-﻿using EBook.Business.Interfaces;
+using EBook.Business.Interfaces;
 using EBook.Common.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
     {
         private readonly IOrderService _orderService;
 
-        private OrderVM OrderVM;
+     //   private OrderVM OrderVM;
         public OrderController(IOrderService orderService)
         {
             _orderService = orderService;

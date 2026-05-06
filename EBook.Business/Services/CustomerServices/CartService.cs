@@ -26,7 +26,8 @@ namespace EBook.Business.Services.CustomerServices
 
         public async Task<CartVM> GetCartForUserAsync(ClaimsPrincipal user)
         {
-            var claimsIdentity = (ClaimsIdentity)user.Identity; // this line is to get the claims identity of the user, which contains the claims (like user ID, roles, etc.) associated with the authenticated user.
+            var claimsIdentity = (ClaimsIdentity)user.Identity; // this line is to get the claims identity of the user, which contains the
+                                                                // claims (like user ID, roles, etc.) associated with the authenticated user.
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             if (claim == null)
@@ -86,7 +87,7 @@ namespace EBook.Business.Services.CustomerServices
                 cart.Price = cart.Product.Price * cart.Count;  //50 * 1 = 50 
                 cartVM.OrderProduct.OrderPrice += cart.Price;  //= 250
             }
-
+             
             return cartVM;
         }
 
@@ -115,7 +116,8 @@ namespace EBook.Business.Services.CustomerServices
             await _unitOfWork.OrderProduct.AddAsync(orderProduct);
             await _unitOfWork.SaveAsync();
 
-            foreach (var cart in listCart)
+            foreach (var cart in listCart) // this code is used to create order details for each item in the cart and associate it with
+                                           // the order product we just created.
             {
                 var orderDetails = new OrderDetails
                 {
@@ -176,7 +178,6 @@ namespace EBook.Business.Services.CustomerServices
             await _unitOfWork.SaveAsync();
             return true;
         }
-
 
     }
 }

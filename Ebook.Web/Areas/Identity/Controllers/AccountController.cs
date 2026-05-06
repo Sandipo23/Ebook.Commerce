@@ -37,6 +37,7 @@ namespace EBook.Store.Web.Areas.Identity.Controllers
         public IActionResult Login() => View();
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model) { 
         
             if (!ModelState.IsValid) return View(model);

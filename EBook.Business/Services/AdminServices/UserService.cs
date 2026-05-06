@@ -13,7 +13,7 @@ namespace EBook.Business.Services.AdminServices
                                                                     // manage user accounts, including creating, updating, deleting, and retrieving users from the database.
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public UserService(
+        public UserService( 
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
@@ -22,12 +22,12 @@ namespace EBook.Business.Services.AdminServices
             _signInManager = signInManager;
         }
 
-        public async Task<IdentityResult> RegisterAsync(RegisterViewModel model)
+        public async Task<IdentityResult> RegisterAsync(RegisterViewModel model) // this method is responsible for registering a new user.
         {
             var user = new ApplicationUser
             {
                 UserName = model.Email,
-                Email = model.Email,
+                Email = model.Email, 
                 FullName = model.FullName,
                 Address = model.Address,
                 PostalCode = model.PostalCode,

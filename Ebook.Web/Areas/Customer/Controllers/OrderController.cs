@@ -25,6 +25,8 @@ namespace Ecommerce.Web.Areas.Customer.Controllers
             return View(orderProducts);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CancelOrder(int id)
         {
             await _orderService.CancelOrderAsync(id);

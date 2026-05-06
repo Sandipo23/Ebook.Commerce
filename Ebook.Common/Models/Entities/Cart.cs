@@ -18,7 +18,7 @@ namespace Ebook.Common.Models.Entities
 
         [Key]
         public int Id { get; set; }
-        public string AppUserId { get; set; }
+        public string AppUserId { get; set; } // This property stores the ID of the user who added the item to the cart. It is a foreign key that references the primary key of the ApplicationUser entity.
         public int ProductId { get; set; }
         public int Count { get; set; }
         public double Price { get; set; }

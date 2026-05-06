@@ -42,7 +42,7 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
             return View(category);
         }
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id) 
         {
             if (id == null || id == 0)
             {
@@ -68,7 +68,6 @@ namespace EBook.Store.Web.Areas.Admin.Controllers
             return View(category);
         }
 
-        [HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id <= 0)

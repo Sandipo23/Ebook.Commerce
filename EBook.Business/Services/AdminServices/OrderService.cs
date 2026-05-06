@@ -33,7 +33,7 @@ namespace EBook.Business.Services.AdminServices
 
         public async Task<IEnumerable<OrderProduct>> GetAllAsync()
         {
-            var orderList = await _unitOfWork.OrderProduct.GetAllAsync(o => o.OrderStatus != "Delivered");
+            var orderList = await _unitOfWork.OrderProduct.GetAllAsync();
 
             return orderList;
         }
@@ -70,11 +70,17 @@ namespace EBook.Business.Services.AdminServices
                                                                                                                             // which means it is looking for the OrderProduct associated with the provided OrderVM.,
                                                                                                                             // we work on actual order product not the view model, we need to update the order product in the database,
                                                                                                                             // so we need to retrieve it first using the id from the view model.
+            if (orderProduct == null)
+            {
+                return null;
+            }
 
             orderProduct.OrderStatus = "Cancel";
             await _unitOfWork.OrderProduct.UpdateAsync(orderProduct);
             await _unitOfWork.SaveAsync();
-            return OrderVM;
+
+            orderVM.OrderProduct = orderProduct;
+            return orderVM;
         }
 
 

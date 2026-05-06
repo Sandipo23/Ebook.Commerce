@@ -32,7 +32,10 @@ namespace EBook.Business.Services.AdminServices
             return productList;
         }
 
-        public async Task<ProductVM> GetProductVMAsync(int? id) 
+        public async Task<ProductVM> GetProductVMAsync(int? id) // this method is responsible for creating and returning a ProductVM instance,
+                                                                // which contains a Product object and a list of categories for selection.
+                                                                // The method takes an optional id parameter, which is used to determine whether to
+                                                                // create a new Product or to retrieve an existing Product from the database.
         {
             ProductVM productVM = new ProductVM() 
             {

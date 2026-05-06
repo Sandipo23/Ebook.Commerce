@@ -41,9 +41,20 @@ namespace EBook.Business.Services.CustomerServices
 
         public async Task CancelOrderAsync(int id)
         {
-            var order = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(x => x.Id == id);
+            string userId = GetUserId();
+            if (userId == null)
+            {
+                return;
+            }
 
-            if (order.OrderStatus == "Ordered")
+            var order = await _unitOfWork.OrderProduct.GetFirstOrDefaultAsync(
+                x => x.Id == id && x.AppUserId == userId);
+            if (order == null)
+            {
+                return;
+            }
+
+            if (order.OrderStatus != "Delivered")
                 order.OrderStatus = "Cancel";
 
             await _unitOfWork.OrderProduct.UpdateAsync(order);
